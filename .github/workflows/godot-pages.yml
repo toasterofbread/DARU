@@ -1,0 +1,74 @@
+name: Deploy Godot web build to Pages
+
+env:
+  GODOT_VERSION: 4.0.3
+  TEMPLATE_URL: https://github.com/toasterofbread/godot/releases/download/4.0-custom-1/web_release.zip
+  EDITOR_URL: https://github.com/toasterofbread/godot/releases/download/4.0-custom-1/godot.linuxbsd.editor.x86_64
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.0.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download editor and build template
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          wget $TEMPLATE_URL -O ./web_release.zip
+          mv ./web_release.zip ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          #wget $EDITOR_URL -O ./godot.64
+          #chmod +x ./godot.64
+          
+      - name: Create staging directory
+        run: mkdir -v -p build
+
+      - name: Build
+        run: godot --headless --export-release "Web" ./build/index.html
+        
+      - name: Install rsync and curl
+        run: |
+          apt-get update && apt-get install -y rsync curl
+          
+      - name: Patch for Cross Origin Isolation and SharedArrayBuffer
+        run: |
+          cd build/
+          curl https://raw.githubusercontent.com/josephrocca/clip-image-sorter/92b108dc670d0b56bd6b72963b0e86c4c862412e/enable-threads.js --output enable-threads.js
+          sed -i 's|headers.set("Cross-Origin-Embedder-Policy", "credentialless")|headers.set("Cross-Origin-Embedder-Policy", "require-corp")|g'  enable-threads.js
+          sed -i 's|<script src="index.js"></script>|<script src="enable-threads.js"></script><script src="index.js"></script>|g' index.html
+        
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/
+          force_orphan: true
+          user_name: 'github-ci[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Publish to gh-pages'
