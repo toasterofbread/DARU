@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://omrlx4fdn875"]
+
+[ext_resource type="Script" path="res://src/scene/object/pipe_transition/PipeTransition.gd" id="1_xo0ii"]
+[ext_resource type="AudioStream" uid="uid://cam6yem14s3no" path="res://src/resource/sound/object/pipe_travel.wav" id="2_33sbh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d2xbi"]
+size = Vector2(6, 6)
+
+[node name="PipeTransition" type="Area2D"]
+script = ExtResource("1_xo0ii")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_d2xbi")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_33sbh")

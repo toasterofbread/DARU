@@ -1,0 +1,90 @@
+[gd_scene load_steps=11 format=3 uid="uid://cs18ja0nyeoiy"]
+
+[ext_resource type="Script" path="res://src/scene/character/mario/Mario.gd" id="1_w443f"]
+[ext_resource type="Texture2D" uid="uid://cmme0dgfqd271" path="res://src/resource/sprite/character/mario/die.png" id="2_8tcpr"]
+[ext_resource type="Texture2D" uid="uid://b5rjbv7rt2p15" path="res://src/resource/sprite/character/mario/jump.png" id="2_fy55v"]
+[ext_resource type="Texture2D" uid="uid://co1y34s3e3yp0" path="res://src/resource/sprite/character/mario/run/2.png" id="3_vwnxy"]
+[ext_resource type="Texture2D" uid="uid://b3kunix0xg2c" path="res://src/resource/sprite/character/mario/run/1.png" id="4_0w81p"]
+[ext_resource type="Texture2D" uid="uid://bdlfkk44kbu4o" path="res://src/resource/sprite/character/mario/run/0.png" id="5_f2av0"]
+[ext_resource type="Texture2D" uid="uid://412ok1jltkeu" path="res://src/resource/sprite/character/mario/stand.png" id="6_j70ge"]
+[ext_resource type="Texture2D" uid="uid://cnfmwi0fltluf" path="res://src/resource/sprite/character/mario/turn.png" id="8_nsd10"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kvwya"]
+animations = [{
+"center_offset_x": 0.0,
+"center_offset_y": 0.0,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8tcpr")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
+}, {
+"center_offset_x": 0.0,
+"center_offset_y": 0.0,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_fy55v")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"center_offset_x": 0.0,
+"center_offset_y": 0.0,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_f2av0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_vwnxy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_0w81p")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}, {
+"center_offset_x": 0.0,
+"center_offset_y": 0.0,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_j70ge")
+}],
+"loop": true,
+"name": &"stand",
+"speed": 5.0
+}, {
+"center_offset_x": 0.0,
+"center_offset_y": 0.0,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_nsd10")
+}],
+"loop": true,
+"name": &"turn",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vw7l0"]
+size = Vector2(12, 15)
+
+[node name="Mario" type="CharacterBody2D"]
+collision_mask = 30
+script = ExtResource("1_w443f")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kvwya")
+animation = &"stand"
+autoplay = "stand"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_vw7l0")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_bottom = 240
