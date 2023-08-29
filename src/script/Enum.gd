@@ -17,3 +17,7 @@ static func dir2vec(direction: Dir) -> Vector2:
 	
 	push_error("Unknown direction: " + str(direction))
 	return Vector2.ZERO
+
+enum DamageType {
+	ENEMY, OOB
+}

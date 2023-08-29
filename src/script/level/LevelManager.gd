@@ -46,7 +46,12 @@ func switchToLevel(level_name: String, pipe_identifier: String):
 	
 	if pipe_identifier != null:
 		var pipe: PipeTransition = current_level.getPipe(pipe_identifier)
-		pipe.exitPipe(mario)
+		await pipe.exitPipe(mario)
+		
+		await get_tree().create_timer(0.25).timeout
+	
+	if is_new_level:
+		current_level.start(mario)
 
 func getLevel(level_name: String, assert_exists: bool = false) -> PackedScene:
 	var level = levels.get(level_name)

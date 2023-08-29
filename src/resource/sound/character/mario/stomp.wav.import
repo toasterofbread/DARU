@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://ynftncsytwlv"
-path="res://.godot/imported/stomp.wav-f22639541e29afeca467da7c385b8094.sample"
+path="res://.godot/imported/stomp.wav-930615b3f6650e489a1b602e561c841d.sample"
 
 [deps]
 
-source_file="res://src/resource/sound/object/stomp.wav"
-dest_files=["res://.godot/imported/stomp.wav-f22639541e29afeca467da7c385b8094.sample"]
+source_file="res://src/resource/sound/character/mario/stomp.wav"
+dest_files=["res://.godot/imported/stomp.wav-930615b3f6650e489a1b602e561c841d.sample"]
 
 [params]
 

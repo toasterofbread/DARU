@@ -1,13 +1,16 @@
-[gd_scene load_steps=11 format=3 uid="uid://cs18ja0nyeoiy"]
+[gd_scene load_steps=15 format=3 uid="uid://cs18ja0nyeoiy"]
 
 [ext_resource type="Script" path="res://src/scene/character/mario/Mario.gd" id="1_w443f"]
-[ext_resource type="Texture2D" uid="uid://cmme0dgfqd271" path="res://src/resource/sprite/character/mario/die.png" id="2_8tcpr"]
-[ext_resource type="Texture2D" uid="uid://b5rjbv7rt2p15" path="res://src/resource/sprite/character/mario/jump.png" id="2_fy55v"]
-[ext_resource type="Texture2D" uid="uid://co1y34s3e3yp0" path="res://src/resource/sprite/character/mario/run/2.png" id="3_vwnxy"]
-[ext_resource type="Texture2D" uid="uid://b3kunix0xg2c" path="res://src/resource/sprite/character/mario/run/1.png" id="4_0w81p"]
-[ext_resource type="Texture2D" uid="uid://bdlfkk44kbu4o" path="res://src/resource/sprite/character/mario/run/0.png" id="5_f2av0"]
-[ext_resource type="Texture2D" uid="uid://412ok1jltkeu" path="res://src/resource/sprite/character/mario/stand.png" id="6_j70ge"]
-[ext_resource type="Texture2D" uid="uid://cnfmwi0fltluf" path="res://src/resource/sprite/character/mario/turn.png" id="8_nsd10"]
+[ext_resource type="AudioStream" uid="uid://dlvgwjgqc4quq" path="res://src/resource/sound/character/mario/jump.wav" id="2_norvl"]
+[ext_resource type="Texture2D" uid="uid://cmme0dgfqd271" path="res://src/resource/sprite/character/mario/die.png" id="2_tuveh"]
+[ext_resource type="Texture2D" uid="uid://b5rjbv7rt2p15" path="res://src/resource/sprite/character/mario/jump.png" id="3_y6q7g"]
+[ext_resource type="Texture2D" uid="uid://bdlfkk44kbu4o" path="res://src/resource/sprite/character/mario/run/0.png" id="4_1dpmn"]
+[ext_resource type="Texture2D" uid="uid://b3kunix0xg2c" path="res://src/resource/sprite/character/mario/run/1.png" id="5_oci63"]
+[ext_resource type="Texture2D" uid="uid://co1y34s3e3yp0" path="res://src/resource/sprite/character/mario/run/2.png" id="6_1cbhy"]
+[ext_resource type="Texture2D" uid="uid://cnfmwi0fltluf" path="res://src/resource/sprite/character/mario/turn.png" id="7_0r7bd"]
+[ext_resource type="Texture2D" uid="uid://412ok1jltkeu" path="res://src/resource/sprite/character/mario/stand.png" id="7_uoe4x"]
+[ext_resource type="AudioStream" uid="uid://cafoem3uoq16i" path="res://src/resource/sound/character/mario/die.wav" id="10_xh5qb"]
+[ext_resource type="AudioStream" uid="uid://ynftncsytwlv" path="res://src/resource/sound/character/mario/stomp.wav" id="11_b503u"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kvwya"]
 animations = [{
@@ -15,7 +18,7 @@ animations = [{
 "center_offset_y": 0.0,
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_8tcpr")
+"texture": ExtResource("2_tuveh")
 }],
 "loop": true,
 "name": &"die",
@@ -25,7 +28,7 @@ animations = [{
 "center_offset_y": 0.0,
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_fy55v")
+"texture": ExtResource("3_y6q7g")
 }],
 "loop": true,
 "name": &"jump",
@@ -35,13 +38,13 @@ animations = [{
 "center_offset_y": 0.0,
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_f2av0")
+"texture": ExtResource("4_1dpmn")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_vwnxy")
+"texture": ExtResource("5_oci63")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_0w81p")
+"texture": ExtResource("6_1cbhy")
 }],
 "loop": true,
 "name": &"run",
@@ -51,7 +54,7 @@ animations = [{
 "center_offset_y": 0.0,
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_j70ge")
+"texture": ExtResource("7_uoe4x")
 }],
 "loop": true,
 "name": &"stand",
@@ -61,7 +64,7 @@ animations = [{
 "center_offset_y": 0.0,
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_nsd10")
+"texture": ExtResource("7_0r7bd")
 }],
 "loop": true,
 "name": &"turn",
@@ -69,16 +72,20 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vw7l0"]
-size = Vector2(12, 15)
+size = Vector2(10, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qpyik"]
+size = Vector2(12, 6)
 
 [node name="Mario" type="CharacterBody2D"]
-collision_mask = 30
+collision_mask = 28
 script = ExtResource("1_w443f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kvwya")
-animation = &"stand"
+animation = &"turn"
 autoplay = "stand"
+frame_progress = 0.917549
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
@@ -88,3 +95,24 @@ shape = SubResource("RectangleShape2D_vw7l0")
 limit_left = 0
 limit_top = 0
 limit_bottom = 240
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Jump" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("2_norvl")
+volume_db = -7.0
+
+[node name="Die" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("10_xh5qb")
+
+[node name="Stomp" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("11_b503u")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 11)
+shape = SubResource("RectangleShape2D_qpyik")
+
+[connection signal="body_entered" from="Area2D" to="." method="_onStompAreaBodyEntered"]
