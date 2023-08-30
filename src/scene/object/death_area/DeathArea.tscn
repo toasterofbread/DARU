@@ -3,10 +3,11 @@
 [ext_resource type="Script" path="res://src/scene/object/death_area/DeathArea.gd" id="1_7a2an"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sffpr"]
-size = Vector2(3376, 256)
+size = Vector2(4990, 256)
 
 [node name="DeathArea" type="Area2D"]
 collision_layer = 32
+collision_mask = 3
 script = ExtResource("1_7a2an")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -21,7 +21,10 @@ func canBeEntered(mario: Mario, pad_vector: Vector2) -> bool:
 		return false
 	
 	var dir_vector: Vector2 = Enum.dir2vec(direction) * -1
-	return dir_vector == pad_vector.sign()
+	if dir_vector.x != 0:
+		return dir_vector.x == sign(pad_vector.x)
+	else:
+		return dir_vector.y == sign(pad_vector.y)
 
 func enterPipe(mario: Mario):
 	assert(destination_level != null)
@@ -53,7 +56,7 @@ func _animateMarioTransition(mario: Mario, exiting: bool, in_place: bool = false
 			mario.playAnimation("stand")
 	
 	if dir_vector.x != 0:
-		mario.facing_left = dir_vector.x < 0
+		mario.facing = Enum.Dir.LEFT if dir_vector.x < 0 else Enum.Dir.RIGHT
 	
 	travel_sound_player.play()
 	

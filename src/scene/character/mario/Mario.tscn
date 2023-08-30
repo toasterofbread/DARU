@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cs18ja0nyeoiy"]
+[gd_scene load_steps=16 format=3 uid="uid://cs18ja0nyeoiy"]
 
 [ext_resource type="Script" path="res://src/scene/character/mario/Mario.gd" id="1_w443f"]
 [ext_resource type="AudioStream" uid="uid://dlvgwjgqc4quq" path="res://src/resource/sound/character/mario/jump.wav" id="2_norvl"]
@@ -32,6 +32,16 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump",
+"speed": 5.0
+}, {
+"center_offset_x": 0.0,
+"center_offset_y": 0.0,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_0r7bd")
+}],
+"loop": true,
+"name": &"pull_heavy",
 "speed": 5.0
 }, {
 "center_offset_x": 0.0,
@@ -77,24 +87,20 @@ size = Vector2(10, 15)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qpyik"]
 size = Vector2(12, 6)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1sgcs"]
+size = Vector2(32, 32)
+
 [node name="Mario" type="CharacterBody2D"]
+collision_layer = 1
 collision_mask = 28
 script = ExtResource("1_w443f")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_kvwya")
-animation = &"turn"
+animation = &"run"
 autoplay = "stand"
-frame_progress = 0.917549
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 0.5)
-shape = SubResource("RectangleShape2D_vw7l0")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-limit_left = 0
-limit_top = 0
-limit_bottom = 240
 
 [node name="Sounds" type="Node" parent="."]
 
@@ -108,11 +114,24 @@ stream = ExtResource("10_xh5qb")
 [node name="Stomp" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("11_b503u")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_vw7l0")
+
+[node name="StompArea" type="Area2D" parent="."]
+visible = false
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StompArea"]
 position = Vector2(0, 11)
 shape = SubResource("RectangleShape2D_qpyik")
 
-[connection signal="body_entered" from="Area2D" to="." method="_onStompAreaBodyEntered"]
+[node name="PullArea" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PullArea"]
+shape = SubResource("RectangleShape2D_1sgcs")
+
+[connection signal="body_entered" from="StompArea" to="." method="_onStompAreaBodyEntered"]

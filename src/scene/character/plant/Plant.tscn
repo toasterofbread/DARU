@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://h1nku8d43yas"]
+
+[ext_resource type="Texture2D" uid="uid://bhv12vk7u4x54" path="res://src/resource/sprite/character/plant/0.png" id="1_05frc"]
+[ext_resource type="Texture2D" uid="uid://bpq1hufm1ndqc" path="res://src/resource/sprite/character/plant/1.png" id="2_ubqxi"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5v23w"]
+animations = [{
+"center_offset_x": 0.0,
+"center_offset_y": 0.0,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_05frc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ubqxi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="Plant" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_5v23w")
+autoplay = "default"
+frame_progress = 0.790652

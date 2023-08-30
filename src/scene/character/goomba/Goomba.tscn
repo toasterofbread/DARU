@@ -34,11 +34,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f33ht"]
 size = Vector2(10, 15)
 
-[node name="Goomba" type="CharacterBody2D" node_paths=PackedStringArray("stomp_sprite")]
+[node name="Goomba" type="CharacterBody2D" node_paths=PackedStringArray("stomp_sprite", "sprite")]
 collision_layer = 2
 collision_mask = 38
 script = ExtResource("1_l1k78")
 stomp_sprite = NodePath("AnimatedSprite2D")
+sprite = NodePath("AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3y67s")

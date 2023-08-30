@@ -4,13 +4,16 @@ var DAMAGEABLE := SignalGroupInstance.new(
 	"DAMAGEABLE",
 	"DAMAGE",
 	[
-		TYPE_INT # type: Enum.DamageType
+		TYPE_INT # Enum.DamageType
 	]
 )
 
 var STOMPABLE := SignalGroupInstance.new(
 	"STOMPABLE",
-	"STOMP"
+	"STOMP",
+	[
+		TYPE_OBJECT # Node2D (Stomping object)
+	]
 )
 
 class SignalGroupInstance:

@@ -3,8 +3,8 @@ extends Node
 const LEVELS_DIRECTORY = "res://src/scene/level/"
 const TRANSITION_SCENE = preload("res://src/scene/ui/level_transition/LevelTransition.tscn")
 
-const STARTING_LEVEL: String = "1-1"
-const STARTING_PIPE: String = "a"
+const STARTING_LEVEL: String = "1-2"
+const STARTING_PIPE: String = "A"
 
 var current_level: Level = null
 var levels: Dictionary = {} # <String, PackedScene>
@@ -43,6 +43,9 @@ func switchToLevel(level_name: String, pipe_identifier: String):
 		transition.queue_free()
 		
 		current_level.add_child(mario)
+	
+	if is_new_level:
+		current_level.init(mario)
 	
 	if pipe_identifier != null:
 		var pipe: PipeTransition = current_level.getPipe(pipe_identifier)
